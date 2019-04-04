@@ -114,6 +114,7 @@
 
 		methods: {
 			save() {
+				this.$Progress.start()
 				this.isProcessing = true
 				const form = toMultipartedForm(this.form, this.$route.meta.mode)
 				post(this.storeUrl, form)
@@ -130,6 +131,7 @@
 				        }
 				        this.isProcessing = false
 					})
+				this.$Progress.finish()
 			},
 
 			addDirection() {

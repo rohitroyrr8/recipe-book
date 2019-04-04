@@ -36,11 +36,13 @@
 			}
 		},
 		created() {
+			this.$Progress.start()
 			get('api/recipes')
 				.then((res) => {
 					this.recipes = res.data.recipes
 					//console.log(this.recipes)
 				});
+			this.$Progress.finish()
 		}
 	}
 </script>

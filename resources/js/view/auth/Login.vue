@@ -37,8 +37,10 @@
         },
         methods: {
             login() {
+                this.$Progress.start()
                 this.isProcessing = true
                 this.error = {}
+
                 if(!this.form.email || !this.form.password) {
                     Flash.setError('given data was invalid. try again')
                     this.isProcessing = false
@@ -50,6 +52,7 @@
                             Auth.set(res.data.api_token, res.data.user_id)
                             Flash.setSuccess('You have successfully logged in.')
                             this.$router.push('/')
+                            this.$Progress.finish()
                         }
                         
                       
@@ -61,6 +64,7 @@
                         }
                         Flash.setError('Incorrect combination of email and password')
                         this.isProcessing = false
+                        this.$Progress.fail()
                     })  
                 }
                 

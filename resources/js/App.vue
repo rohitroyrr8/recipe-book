@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<nav class="navbar navbar-expand-lg navbar-light bg-light">
-			<router-link class="navbar-brand" to="/">Recipe Book</router-link>
+			<router-link class="navbar-brand" to="/" replace>Recipe Book</router-link>
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
 			    <span class="navbar-toggler-icon"></span>
 			  </button>
@@ -20,14 +20,14 @@
 			    </ul>
 			    	
 				    <span class="navbar-text" v-if="guest" >
-					    <router-link class="nav-link" to="/login">Login</router-link>
+					    <router-link class="nav-link" to="/login" replace>Login</router-link>
 				    </span>
 
 				    <span class="navbar-text" v-if="guest">
-				      	<router-link class="nav-link" to="/register">Register</router-link>
+				      	<router-link class="nav-link" to="/register" replace>Register</router-link>
 				    </span>
 				    <span class="navbar-text" v-if="auth">
-				      	<router-link class="nav-link" to="/recipes/create">Create Recipe</router-link>
+				      	<router-link class="nav-link" to="/recipes/create" replace>Create Recipe</router-link>
 				    </span>
 				    <span class="navbar-text" v-if="auth">
 				      	<a class="nav-link" @click="logout">Logout</a>
@@ -40,8 +40,10 @@
 		<div class="p-4 m-4 text-center alert alert-success" v-if="flash.success">
 			{{flash.success}}
 		</div>
-
+		<!-- for rendering view -->
 		<router-view></router-view>
+		<!-- for pprogressbar rendering -->
+		<vue-progress-bar></vue-progress-bar>
 	</div>
 </template>
 
@@ -50,7 +52,9 @@
 	import Auth from './store/auth'
 	import Flash from './helper/flash'
 	import { post, interceptors } from './helper/api'
+
 	export default {
+
 		created() {
 			// global error http handler
 			interceptors((err) => {
@@ -86,6 +90,7 @@
 		},
 		methods: {
 			logout() {
+				this.$Progress.start()
 				post('api/logout')
 				    .then((res) => {
 				        if(res.data.done) {
@@ -93,6 +98,7 @@
 				            Auth.remove()
 				            Flash.setSuccess('You have successfully logged out.')
 				            this.$router.push('/login')
+				            this.$Progress.finish()
 				        }
 				    })
 			}

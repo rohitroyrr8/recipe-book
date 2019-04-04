@@ -41,78 +41,7 @@
                         	</ul>
                         </div>
                   </div>
-                  <!-- <div class="col-md-6" style="box-shadow: 1px 2px 17px 4px rgba(0,0,0,0.12);padding: 30px; ">
-                        <form action="http://paisabulls.com/credit-card/store" method="GET">
-                        <input type="hidden" name="_token" value="xZdWLHRyAWlAiT68nlMv73svtcm2O8FFNJ1YbE2q">
-                        
-                        <input type="hidden" name="offer_id" value="1">
-                        <input type="hidden" name="bank_name" value="rbl-bank">
-                        
-                        <div class="row">
-                              <div class="col-md-12">
-                                    <div class="form-group">
-                                          <label>Name</label>
-                                          <input required="" class="form-control" type="text" name="name" placeholder="Enter your Name">
-
-                                    </div>
-                              </div>
-                              <div class="col-md-12">
-                                    <div class="form-group">
-                                          <label>Mobile No.</label>
-                                          <input required="" class="form-control" type="number" name="mobile_no" placeholder="Enter Mobile No.">
-                                          
-                                    </div>
-                              </div>
-                              <div class="col-md-12">
-                                    <div class="form-group">
-                                          <label>Email-address</label>
-                                          <input required="" class="form-control" type="email" name="email_addr" placeholder="Enter Email-address">
-                                          
-                                    </div>
-                              </div>
-                              <div class="col-md-12">
-                                    <div class="form-group">
-                                          <label>Monthly Income</label>
-                                          <input required="" class="form-control" type="number" name="monthly_income" placeholder="Enter Monthly Income" value="23423423">
-                                          
-                                    </div>
-                              </div>
-                               <div class="col-md-12">
-                                    <div class="form-group">
-                                          <label>Employee Type</label>
-                                          <select class="form-control selectpicker" data-style="btn" name="emp_type">
-                                          <option value="">Select Employee Type</option>
-                                            <option value="Salaried">Salaried</option>
-                                            <option value="Self-employed">Self-employed</option>
-                                            
-                                          </select>
-                                          
-                                    </div>
-                                </div>
-								<div class="col-md-12">
-                                    <div class="form-group">
-                                          <label>City</label>
-                                          <input required="" class="form-control" type="text" name="city" placeholder="Enter City" value="Gurugram">
-                                          
-                                    </div>
-                              </div>
-                              <div class="col-md-12">
-                                    <div class="form-group">
-                                          <label>Pincode</label>
-                                          <input required="" class="form-control" type="number" name="pincode" placeholder="Enter Pincode">
-                                          
-                                    </div>
-                              </div> 
-                              <div class="">
-                                    <p class="pl-4">By clicking in this button , you agree to our terms and conditions</p>
-                              
-                              <div class="form-group col-md-12">
-                                    <input class="form-control btn btn-primary" type="submit" name="apply_credit_card" value="Submit">
-                              </div>
-                              </div>
-                        </div>
-                  </form>
-                  </div> -->
+                  
                   
             </div>
 </div>
@@ -137,21 +66,26 @@
 			}
 		},
 		created() {
+      		this.$Progress.start()
 			get(`api/recipes/${this.$route.params.id}`)
 				.then((res) => {
 					this.recipe = res.data.recipe
 				})
+      		this.$Progress.finish()
 		},
 		methods: {
 			remove() {
+        		this.$Progress.start()
 				this.isRemoving = false
 				del(`api/recipes/${this.$route.params.id}`)
 					.then((res) => {
 						if(res.data.deleted) {
 							Flash.setSuccess('You have successfully deleted recipe!')
 							this.$router.push('/')
+
 						}
 					})
+       			 this.$Progress.finish()
 			}
 		}
 	}

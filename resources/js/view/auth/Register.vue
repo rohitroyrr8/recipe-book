@@ -47,6 +47,7 @@
         },
         methods: {
             register() {
+                this.$Progress.start()
                 this.isProcessing = true
                 this.error = {}
                 if(!this.form.email ||! this.form.password || !this.form.name || !this.form.password_confirmation){
@@ -74,6 +75,7 @@
                         Flash.setError('Registration failed.. Try again')
                         this.isProcessing = false
                     })
+                this.$Progress.finish()
             }
         }
     }
